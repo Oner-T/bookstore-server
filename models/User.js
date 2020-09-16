@@ -16,10 +16,24 @@ const UserSchema = new Schema({
       ref: "Book",
     },
   ],
-  purchases:[{
-
-  }],
-  cart
+  purchases: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Purchase",
+    },
+  ],
+  cart: {
+    Books: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Book",
+      },
+    ],
+    price: {
+      type: Number,
+      required: true,
+    },
+  },
 });
 
 const User = model("user", UserSchema);

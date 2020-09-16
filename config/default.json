@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://onertaylanozturk:<password>@bookstore.u3ttv.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "jwtSecret": "sl_myJwtSecret"
+  }

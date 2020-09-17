@@ -1,4 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://onertaylanozturk:24o93n51e34R180@bookstore.u3ttv.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "jwtSecret": "hera"
-  }

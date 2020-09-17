@@ -1,8 +1,12 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 // Create Schema
 const UserSchema = new Schema({
-  userName: {
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
     type: String,
     required: true,
   },
@@ -31,11 +35,10 @@ const UserSchema = new Schema({
     ],
     price: {
       type: Number,
-      required: true,
     },
   },
 });
 
 const User = model("user", UserSchema);
 
-export default User;
+module.exports = User;

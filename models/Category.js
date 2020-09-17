@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } =require("mongoose");
 
 // Create Schema
 const CategorySchema = new Schema({
@@ -19,5 +19,4 @@ const CategorySchema = new Schema({
 });
 
 const Category = model("category", CategorySchema);
-
-export default Category;
+module.exports = Category;

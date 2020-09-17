@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } =require("mongoose");
 
 // Create Schema
 const BookSchema = new Schema({
@@ -37,4 +37,4 @@ const BookSchema = new Schema({
 
 const Book = model("book", BookSchema);
 
-export default Book;
+module.exports= Book;

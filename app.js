@@ -1,45 +1,32 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import path from 'path';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import config from './config';
-
-// routes
-import authRoutes from './routes/api/auth';
-import itemRoutes from './routes/api/items';
-import userRoutes from './routes/api/users';
-
-const { MONGO_URI, MONGO_DB_NAME } = config;
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const config = require("config");
+const cors = require("cors");
 
 const app = express();
-
-// CORS Middleware
 app.use(cors());
-// Logger Middleware
-app.use(morgan('dev'));
-// Bodyparser Middleware
+//Bodyparser Middleware
 app.use(bodyParser.json());
 
-// DB Config
-const db = `${MONGO_URI}/${MONGO_DB_NAME}`;
+// DB config
 
-// Connect to Mongo
+const db = config.get("mongoURI");
+
+//connect to Mongo
 mongoose
   .connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
-  }) // Adding new mongo url parser
-  .then(() => console.log('MongoDB Connected...'))
+  })
+  .then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
 
-// Use Routes
-app.use('/api/items', itemRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes);
+//Use routes
 
+app.use("/api/user", require("./routes/api/user"));
 
+const port = process.env.PORT || 5000;
 
-export default app;
+app.listen(port, () => console.log(`Server started on port ${port}`));

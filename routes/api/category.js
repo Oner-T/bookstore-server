@@ -5,56 +5,35 @@ const mongoose = require("mongoose");
 
 //TicketHeader model
 
-const Book = require("../../models/Book");
+const Category = require("../../models/Category");
 
-//@route    GET api/bugs
-//@desc     get All Bugs by current user
-//@access   Private
 
-router.get("/", auth, (req, res) => {
-  res.set("Authorization", res.locals.token);
-  Book.find()
-    .sort({ date: -1 })
-    .then(bugs => {
-      res.json(bugs.filter(bug => bug.userId == res.locals.userId));
-    })
-    .catch(err => res.status(404).json({ err: err }));
-});
 
 //@route    GET api/bugs/all
 //@desc     get All Bugs by all users
 //@access   Public
 
 router.get("/all", (req, res) => {
-    Book.find()
+    Category.find()
     .sort({ date: -1 })
-    .then(bugs => res.json(bugs))
+    .then(cat => res.json(cat))
     .catch(err => res.status(404).json({ err: err }));
 });
 
-//@route    GET api/bugs/all/:id
-//@desc     get All Bugs by one user
-//@access   Public
 
-router.get("/all/:id", (req, res) => {
-    Book.find()
-    .sort({ date: -1 })
-    .then(bugs => res.json(bugs))
-    .catch(err => res.status(404).json({ err: err }));
-});
 
 //@route    GET api/bugs
-//@desc     get one Bug by id
+//@desc     get one Category by id
 //@access   Private
 
-router.get("/:id", auth, (req, res) => {
+router.get("/:id", (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.send("Please provide valid id");
   }
   var id = mongoose.Types.ObjectId(req.params.id);
-  Book.findById({ _id: id })
-    .then(book => {
-      res.json(book);
+  Category.findById({ _id: id })
+    .then(cat => {
+      res.json(cat);
     })
     .catch(err => res.status(404).json({ err: err }));
 });
@@ -73,7 +52,7 @@ router.post("/", auth, (req, res) => {
     return res.status(400).json({ icerik: "Author must be valid" });
   }
 
-  const newBook = new Book({
+  const newCategory = new Book({
     name: req.body.name,
     author: req.body.author,
     isbn: req.body.isbn,
@@ -84,26 +63,26 @@ router.post("/", auth, (req, res) => {
     comments: req.body.comments,
   });
 
-  newBook
+  newCategory
     .save()
-    .then(book => {
-      res.json(book);
+    .then(cat => {
+      res.json(cat);
     })
     .catch(err => {
       res.status(404).json({ error: err });
     });
 });
 
-//@route    DELETE api/bugs/:id
-//@desc     delete a Bug
+//@route    DELETE api/category/:id
+//@desc     delete a category
 //@access   Private
 
-router.delete("/:id", auth, (req, res) => {
+router.delete("/:id", (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.send("Please provide valid id");
   }
   var id = mongoose.Types.ObjectId(req.params.id);
-  Book.deleteOne({ _id: id })
+  Category.deleteOne({ _id: id })
     .then(() => {
       res.json({ success: true });
     })
@@ -117,11 +96,11 @@ router.delete("/:id", auth, (req, res) => {
 //@desc     update a Bug
 //@access   Private
 
-router.put("/:id", auth, (req, res) => {
+router.put("/:id", (req, res) => {
   var conditions = { _id: req.params.id };
-  Book.updateOne(conditions, req.body.response)
-    .then(book => {
-      res.json(book);
+  Category.updateOne(conditions, req.body.response)
+    .then(cat => {
+      res.json(cat);
     })
     .catch(err => {
       console.log(err);
